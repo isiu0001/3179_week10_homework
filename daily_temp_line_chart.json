@@ -5,6 +5,30 @@
     "data": {
       "url": "data/major_city_avg_max_temp.csv"
     },
+
+    "params": [
+        {
+          "name": "citySelection",
+          "bind": {
+            "input": "select",
+            "options": ["All", "Sydney", "Melbourne", "Brisbane", "Perth", "Adelaide", "Hobart"],
+            "name": "Select City"
+          },
+          "value": "All"
+        }
+      ],
+    "transform": [
+          
+        {
+          "filter": "citySelection == 'All' || datum.Location == citySelection"
+        },
+  
+        {
+          "calculate": "round(datum.MaxTemp * 100) / 100",
+          "as": "RoundedMaxTemp"
+        }
+    ],
+
     "layer": [
       {
         "mark": "line",
@@ -31,9 +55,9 @@
           },
           "tooltip": [
             {"field": "Year", "type": "ordinal", "title": "Year"},
-            {"field": "MaxTemp", "type": "quantitative", "title": "Avg Max Temperature (°C)"},
+            {"field": "RoundedMaxTemp", "type": "quantitative", "title": "Avg Max Temperature (°C)"},
             {"field": "Location", "type": "nominal", "title": "City"}
-          ]
+        ]
         }
       },
       {
@@ -53,7 +77,7 @@
           },
           "tooltip": [
             {"field": "Year", "type": "ordinal", "title": "Year"},
-            {"field": "MaxTemp", "type": "quantitative", "title": "Avg Max Temperature (°C)"},
+            {"field": "RoundedMaxTemp", "type": "quantitative", "title": "Avg Max Temperature (°C)"},
             {"field": "Location", "type": "nominal", "title": "City"}
           ]
         }
@@ -81,7 +105,7 @@
             "datum": 2015
           },
           "y": {
-            "datum": 28.5
+            "datum": 29
           },
           "text": {
             "value": "Brisbane usually hottest,\nbut briefly surpassed by Melbourne in 2015"
@@ -110,33 +134,18 @@
           "type": "point",
           "shape": "triangle",
           "size": 80,
-          "angle": 180
+          "angle": 180,
+          "align": "center"
         },
         "encoding": {
           "x": {
-            "datum": 2012
+            "value": 975
           },
           "y": {
-            "datum": 27.6
+            "datum": 30.9
           },
           "color": {"value": "black"}
         }
-      }
-    ],
-    "params": [
-      {
-        "name": "citySelection",
-        "bind": {
-          "input": "select",
-          "options": ["All", "Sydney", "Melbourne", "Brisbane", "Perth", "Adelaide", "Hobart"],
-          "name": "Select City"
-        },
-        "value": "All"
-      }
-    ],
-    "transform": [
-      {
-        "filter": "citySelection == 'All' || datum.Location == citySelection"
       }
     ]
   }
